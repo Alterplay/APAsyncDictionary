@@ -23,7 +23,7 @@
     if (self)
     {
         self.dictionary = [[NSMutableDictionary alloc] init];
-        NSString *name = [NSString stringWithFormat:@"com.alterplay.APSmartStorage.%d", self.hash];
+        NSString *name = [NSString stringWithFormat:@"com.alterplay.APAsyncDictionary.%d", self.hash];
         queue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], NULL);
     }
     return self;

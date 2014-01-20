@@ -55,7 +55,6 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         id object = [dictionary objectForKey:key];
-        NSLog(@"read done %@\n%@", key, object);
         [weakThread performBlockOnThread:^
         {
             callback ? callback(key, object) : nil;
@@ -70,7 +69,6 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeObjectForKey:key];
-        NSLog(@"remove done %@", key);
     }];
 }
 

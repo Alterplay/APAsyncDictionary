@@ -24,5 +24,8 @@
 - (void)removeAllObjects;
 // count
 - (void)objectsCountCallback:(void(^)(NSUInteger count))callback;
+// all keys/objects
+- (void)allKeysCallback:(void(^)(NSArray *keys))callback;
+- (void)allObjectsCallback:(void(^)(NSArray *objects))callback;
 
 @end

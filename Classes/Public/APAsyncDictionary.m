@@ -10,7 +10,7 @@
 #import "NSThread+Block.h"
 
 @interface APAsyncDictionary ()
-@property (nonatomic, strong) NSMutableDictionary *dictionary;
+@property (nonatomic, readonly) NSMutableDictionary *dictionary;
 @end
 
 @implementation APAsyncDictionary
@@ -22,7 +22,7 @@
     self = [super init];
     if (self)
     {
-        self.dictionary = [[NSMutableDictionary alloc] init];
+        _dictionary = [[NSMutableDictionary alloc] init];
         NSString *name = [NSString stringWithFormat:@"com.alterplay.APAsyncDictionary.%d", self.hash];
         queue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], NULL);
     }
@@ -99,6 +99,34 @@
         [weakThread performBlockOnThread:^
         {
             callback ? callback(count) : nil;
+        }];
+    }];
+}
+
+#pragma mark - all keys/objects
+
+- (void)allKeysCallback:(void (^)(NSArray *keys))callback
+{
+    __weak NSThread *weakThread = NSThread.currentThread;
+    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    {
+        NSArray *array = [dictionary allKeys];
+        [weakThread performBlockOnThread:^
+        {
+            callback ? callback(array) : nil;
+        }];
+    }];
+}
+
+- (void)allObjectsCallback:(void (^)(NSArray *objects))callback
+{
+    __weak NSThread *weakThread = NSThread.currentThread;
+    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    {
+        NSArray *array = [dictionary allValues];
+        [weakThread performBlockOnThread:^
+        {
+            callback ? callback(array) : nil;
         }];
     }];
 }

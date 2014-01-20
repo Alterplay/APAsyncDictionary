@@ -51,11 +51,12 @@
 
 - (void)objectForKey:(id <NSCopying>)key callback:(void (^)(id <NSCopying> key, id object))callback
 {
-    __weak NSThread *currentThread = NSThread.currentThread;
+    __weak NSThread *weakThread = NSThread.currentThread;
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         id object = [dictionary objectForKey:key];
-        [currentThread performBlockOnThread:^
+        NSLog(@"read done %@\n%@", key, object);
+        [weakThread performBlockOnThread:^
         {
             callback ? callback(key, object) : nil;
         }];
@@ -69,6 +70,7 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeObjectForKey:key];
+        NSLog(@"remove done %@", key);
     }];
 }
 
@@ -85,6 +87,21 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeAllObjects];
+    }];
+}
+
+#pragma mark - count
+
+- (void)objectsCountCallback:(void (^)(NSUInteger count))callback
+{
+    __weak NSThread *weakThread = NSThread.currentThread;
+    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    {
+        NSUInteger count = dictionary.count;
+        [weakThread performBlockOnThread:^
+        {
+            callback ? callback(count) : nil;
+        }];
     }];
 }
 

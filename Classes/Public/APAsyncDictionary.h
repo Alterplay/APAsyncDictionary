@@ -22,5 +22,7 @@
 - (void)removeObjectForKey:(id <NSCopying>)key;
 - (void)removeObjectsForKeys:(NSArray *)keys;
 - (void)removeAllObjects;
+// count
+- (void)objectsCountCallback:(void(^)(NSUInteger count))callback;
 
 @end

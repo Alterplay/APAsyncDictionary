@@ -137,6 +137,44 @@ describe(@"APAsyncDictionary", ^
         in_time(checkObject1) should be_nil;
         in_time(checkObject2) should be_nil;
     });
+
+    it(@"should return objects count", ^
+    {
+        [dictionary setObjectsAndKeysFromDictionary:@{@"someObject" : [[NSObject alloc] init],
+                                                      @"anotherObject" : [[NSObject alloc] init]}];
+        __block NSUInteger checkCount = 0;
+        [dictionary objectsCountCallback:^(NSUInteger count)
+        {
+            checkCount = count;
+        }];
+        in_time(checkCount) should equal(2);
+    });
+
+    it(@"should return all keys", ^
+    {
+        NSObject *object = [[NSObject alloc] init];
+        [dictionary setObjectsAndKeysFromDictionary:@{@"someObject" : object}];
+        __block NSArray *array = nil;
+        [dictionary allKeysCallback:^(NSArray *keys)
+        {
+            array = keys;
+        }];
+        in_time(array.count) should equal(1);
+        in_time(array.firstObject) should equal(@"someObject");
+    });
+
+    it(@"should return all values", ^
+    {
+        NSObject *object = [[NSObject alloc] init];
+        [dictionary setObjectsAndKeysFromDictionary:@{@"someObject" : object}];
+        __block NSArray *array = nil;
+        [dictionary allObjectsCallback:^(NSArray *objects)
+        {
+            array = objects;
+        }];
+        in_time(array.count) should equal(1);
+        in_time(array.firstObject) should equal(object);
+    });
 });
 
 SPEC_END

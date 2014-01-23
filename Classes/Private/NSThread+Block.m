@@ -10,12 +10,14 @@
 
 @implementation NSThread (Block)
 
-- (void)performBlockOnThread:(void(^)())block
++ (void)performOnThread:(NSThread *)thread block:(void (^)())block
 {
-    [self performSelector:@selector(performBlock:) onThread:self withObject:block waitUntilDone:NO];
+    thread = thread ?: [NSThread mainThread];
+    [self performSelector:@selector(performBlock:) onThread:thread withObject:(id)block
+            waitUntilDone:NO];
 }
 
-- (void)performBlock:(void(^)())block
++ (void)performBlock:(void (^)())block
 {
     block ? block() : nil;
 }

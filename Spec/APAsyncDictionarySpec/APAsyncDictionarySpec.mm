@@ -25,13 +25,13 @@ describe(@"APAsyncDictionary", ^
 
     it(@"should run callback block on callers thread", ^
     {
-        __block BOOL result;
-        NSThread *thread = NSThread.currentThread;
+        __block NSThread *callbackThread = nil;
+        NSThread *currentThread = NSThread.currentThread;
         [dictionary objectForKey:@"key" callback:^(id <NSCopying> key, id object)
         {
-            result = [thread isEqual:NSThread.currentThread];
+            callbackThread = NSThread.currentThread;
         }];
-        in_time(result) should equal(YES);
+        in_time(callbackThread) should equal(currentThread);
     });
 
     it(@"should return nil if no object for key", ^

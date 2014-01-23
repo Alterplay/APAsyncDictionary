@@ -55,7 +55,7 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         id object = [dictionary objectForKey:key];
-        [weakThread performBlockOnThread:^
+        [NSThread performOnThread:weakThread block:^
         {
             callback ? callback(key, object) : nil;
         }];
@@ -96,7 +96,7 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         NSUInteger count = dictionary.count;
-        [weakThread performBlockOnThread:^
+        [NSThread performOnThread:weakThread block:^
         {
             callback ? callback(count) : nil;
         }];
@@ -111,7 +111,7 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         NSArray *array = [dictionary allKeys];
-        [weakThread performBlockOnThread:^
+        [NSThread performOnThread:weakThread block:^
         {
             callback ? callback(array) : nil;
         }];
@@ -124,7 +124,7 @@
     [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
     {
         NSArray *array = [dictionary allValues];
-        [weakThread performBlockOnThread:^
+        [NSThread performOnThread:weakThread block:^
         {
             callback ? callback(array) : nil;
         }];

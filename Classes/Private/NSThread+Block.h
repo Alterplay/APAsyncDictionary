@@ -10,6 +10,6 @@
 
 @interface NSThread (Block)
 
-- (void)performBlockOnThread:(void(^)())block;
++ (void)performOnThread:(NSThread *)thread block:(void (^)())block;
 
 @end

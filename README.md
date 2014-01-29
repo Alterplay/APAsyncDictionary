@@ -51,7 +51,7 @@ __block id someObject;
 // objects count
 [dictionary objectsCountCallback:^(NSUInteger count)
 {
-    // do somethig with count    
+    // do something with count    
 }];
 ...
 // all keys

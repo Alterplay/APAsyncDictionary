@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "APAsyncDictionary"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Thread safe wrapper to NSMutableDictionary for asynchronous access by @Alterplay folks."
   s.homepage     = "https://github.com/Alterplay/APAsyncDictionary"
   s.license      = { :type => 'MIT', :file => 'LICENSE.txt' }

@@ -1,6 +1,5 @@
 <img src="https://dl.dropboxusercontent.com/u/2334198/APAsyncDictionary-git-teaser.png">
 
-#### About
 APAsyncDictionary is a wrapper on [NSMutableDictionary](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Classes/NSMutableDictionary_Class/Reference/Reference.html) that performs actions in own [serial queue](https://developer.apple.com/library/ios/documentation/General/Conceptual/ConcurrencyProgrammingGuide/OperationQueues/OperationQueues.html) and return results to caller's thread. And it could be very useful when application uses `dictionary` concurrently from different threads.
 
 #### Features

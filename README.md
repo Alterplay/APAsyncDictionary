@@ -70,7 +70,6 @@ __block id someObject;
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/6766cbe79673060fa2c0ec4291519ad0 "githalytics.com")](http://githalytics.com/Alterplay/APAsyncDictionary)
 If you have improvements or concerns, feel free to post [an issue](https://github.com/Alterplay/APAsyncDictionary/issues) and write details.
 
-#### Contacts
-
+======================
 [Check out](https://github.com/Alterplay) all Alterplay's GitHub projects.
 [Email us](mailto:hello@alterplay.com?subject=From%20GitHub%20APPhotolibrary) with other ideas and projects.

@@ -71,4 +71,4 @@ __block id someObject;
 If you have improvements or concerns, feel free to post [an issue](https://github.com/Alterplay/APAsyncDictionary/issues) and write details.
 
 [Check out](https://github.com/Alterplay) all Alterplay's GitHub projects.
-[Email us](mailto:hello@alterplay.com?subject=From%20GitHub%20APPhotolibrary) with other ideas and projects.
+[Email us](mailto:hello@alterplay.com?subject=From%20GitHub%20APAsyncDictionary) with other ideas and projects.

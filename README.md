@@ -33,6 +33,9 @@ __block id someObject;
     // do something with object
 }];
 ...
+// get object for key synchronously
+someObject = [dictionary objectForKeySynchronously:@"key"];
+...
 // set object
 [dictionary setObject:object forKey:@"key"];
 ...
@@ -48,11 +51,14 @@ __block id someObject;
 // remove all objects
 [dictionary removeAllObjects];
 ...
-// objects count
+// get objects count
 [dictionary objectsCountCallback:^(NSUInteger count)
 {
     // do something with count    
 }];
+...
+// get objects count synchronously
+NSUInteger count = [dictionary objectsCountSynchronously];
 ...
 // all keys
 [dictionary allKeysCallback:^(NSArray *keys)
@@ -66,6 +72,16 @@ __block id someObject;
     // do something with objects
 }];
 ```
+
+#### Versions
+
+**Version 0.0.4**
+* Added method to get object for key synchronously
+* Added method to get object for key synchronously
+
+**Version 0.0.3**
+* First public release
+
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/6766cbe79673060fa2c0ec4291519ad0 "githalytics.com")](http://githalytics.com/Alterplay/APAsyncDictionary)
 ======================
 If you have improvements or concerns, feel free to post [an issue](https://github.com/Alterplay/APAsyncDictionary/issues) and write details.

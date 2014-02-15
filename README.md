@@ -80,7 +80,7 @@ NSUInteger count = [dictionary objectsCountSynchronously];
 * Added method to get object for key synchronously
 
 **Version 0.0.3**
-* First public release
+* Public release
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/6766cbe79673060fa2c0ec4291519ad0 "githalytics.com")](http://githalytics.com/Alterplay/APAsyncDictionary)
 ======================

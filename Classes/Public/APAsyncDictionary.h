@@ -18,12 +18,14 @@
 - (void)setObjectsAndKeysFromDictionary:(NSDictionary *)dictionary;
 // get object
 - (void)objectForKey:(id <NSCopying>)key callback:(void(^)(id <NSCopying> key, id object))callback;
+- (id)objectForKeySynchronously:(id <NSCopying>)key;
 // remove objects
 - (void)removeObjectForKey:(id <NSCopying>)key;
 - (void)removeObjectsForKeys:(NSArray *)keys;
 - (void)removeAllObjects;
 // count
 - (void)objectsCountCallback:(void(^)(NSUInteger count))callback;
+- (NSUInteger)objectsCountSynchronously;
 // all keys/objects
 - (void)allKeysCallback:(void(^)(NSArray *keys))callback;
 - (void)allObjectsCallback:(void(^)(NSArray *objects))callback;

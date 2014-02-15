@@ -56,6 +56,14 @@ describe(@"APAsyncDictionary", ^
         in_time(checkObject) should equal(someObject);
     });
 
+    it(@"should set object for key and read it synchronously", ^
+    {
+        NSObject *someObject = [[NSObject alloc] init];
+        [dictionary setObject:someObject forKey:@"someKey"];
+        NSObject *checkObject = [dictionary objectForKeySynchronously:@"someKey"];
+        checkObject should equal(someObject);
+    });
+
     it(@"should set object and keys from NSDictionary", ^
     {
         __block NSObject *checkObject1, *checkObject2;
@@ -148,6 +156,14 @@ describe(@"APAsyncDictionary", ^
             checkCount = count;
         }];
         in_time(checkCount) should equal(2);
+    });
+
+    it(@"should return objects count synchronously", ^
+    {
+        [dictionary setObjectsAndKeysFromDictionary:@{@"someObject" : [[NSObject alloc] init],
+                                                      @"anotherObject" : [[NSObject alloc] init]}];
+        NSUInteger checkCount = [dictionary objectsCountSynchronously];
+        checkCount should equal(2);
     });
 
     it(@"should return all keys", ^

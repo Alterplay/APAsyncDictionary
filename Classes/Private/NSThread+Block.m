@@ -12,14 +12,25 @@
 
 + (void)performOnThread:(NSThread *)thread block:(void (^)())block
 {
-    thread = thread ?: [NSThread mainThread];
-    [self performSelector:@selector(performBlock:) onThread:thread withObject:(id)block
-            waitUntilDone:NO];
+    if (block)
+    {
+        thread = thread ?: [NSThread mainThread];
+        // it is the same thread, so we just run it without 'performSelector'
+        if (thread == NSThread.currentThread)
+        {
+            block();
+        }
+        else
+        {
+            [self performSelector:@selector(performBlock:) onThread:thread withObject:(id)block
+                    waitUntilDone:NO];
+        }
+    }
 }
 
 + (void)performBlock:(void (^)())block
 {
-    block ? block() : nil;
+    block();
 }
 
 @end

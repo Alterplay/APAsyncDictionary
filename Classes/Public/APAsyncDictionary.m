@@ -34,7 +34,7 @@
 
 - (void)setObject:(id)object forKey:(id <NSCopying>)key
 {
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary setObject:object forKey:key];
     }];
@@ -42,7 +42,7 @@
 
 - (void)setObjectsAndKeysFromDictionary:(NSDictionary *)aDictionary
 {
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary addEntriesFromDictionary:aDictionary];
     }];
@@ -53,7 +53,7 @@
 - (void)objectForKey:(id <NSCopying>)key callback:(void (^)(id <NSCopying> key, id object))callback
 {
     __weak NSThread *weakThread = NSThread.currentThread;
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         id object = [dictionary objectForKey:key];
         [NSThread performOnThread:weakThread block:^
@@ -63,11 +63,21 @@
     }];
 }
 
+- (id)objectForKeySynchronously:(id <NSCopying>)key
+{
+    __block id object;
+    [self runDictionarySynchronousBlock:^(NSMutableDictionary *dictionary)
+    {
+        object = [dictionary objectForKey:key];
+    }];
+    return object;
+}
+
 #pragma mark - remove objects
 
 - (void)removeObjectForKey:(id <NSCopying>)key
 {
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeObjectForKey:key];
     }];
@@ -75,7 +85,7 @@
 
 - (void)removeObjectsForKeys:(NSArray *)keys
 {
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeObjectsForKeys:keys];
     }];
@@ -83,7 +93,7 @@
 
 - (void)removeAllObjects
 {
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         [dictionary removeAllObjects];
     }];
@@ -94,7 +104,7 @@
 - (void)objectsCountCallback:(void (^)(NSUInteger count))callback
 {
     __weak NSThread *weakThread = NSThread.currentThread;
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         NSUInteger count = dictionary.count;
         [NSThread performOnThread:weakThread block:^
@@ -104,12 +114,23 @@
     }];
 }
 
+- (NSUInteger)objectsCountSynchronously
+{
+    __block NSUInteger count;
+    [self runDictionarySynchronousBlock:^(NSMutableDictionary *dictionary)
+    {
+        count = dictionary.count;
+    }];
+    return count;
+}
+
+
 #pragma mark - all keys/objects
 
 - (void)allKeysCallback:(void (^)(NSArray *keys))callback
 {
     __weak NSThread *weakThread = NSThread.currentThread;
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         NSArray *array = [dictionary allKeys];
         [NSThread performOnThread:weakThread block:^
@@ -122,7 +143,7 @@
 - (void)allObjectsCallback:(void (^)(NSArray *objects))callback
 {
     __weak NSThread *weakThread = NSThread.currentThread;
-    [self runDictionaryOperationBlock:^(NSMutableDictionary *dictionary)
+    [self runDictionaryAsynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         NSArray *array = [dictionary allValues];
         [NSThread performOnThread:weakThread block:^
@@ -134,10 +155,19 @@
 
 #pragma mark - private
 
-- (void)runDictionaryOperationBlock:(void(^)(NSMutableDictionary *dictionary))operationBlock
+- (void)runDictionaryAsynchronousBlock:(void(^)(NSMutableDictionary *dictionary))operationBlock
 {
     __weak __typeof(self) weakSelf = self;
     dispatch_async(queue, ^
+    {
+        operationBlock && weakSelf.dictionary ? operationBlock(weakSelf.dictionary) : nil;
+    });
+}
+
+- (void)runDictionarySynchronousBlock:(void(^)(NSMutableDictionary *dictionary))operationBlock
+{
+    __weak __typeof(self) weakSelf = self;
+    dispatch_sync(queue, ^
     {
         operationBlock && weakSelf.dictionary ? operationBlock(weakSelf.dictionary) : nil;
     });

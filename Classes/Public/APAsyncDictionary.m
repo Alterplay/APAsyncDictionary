@@ -116,7 +116,7 @@
 
 - (NSUInteger)objectsCountSynchronously
 {
-    __block NSUInteger count;
+    __block NSUInteger count = 0;
     [self runDictionarySynchronousBlock:^(NSMutableDictionary *dictionary)
     {
         count = dictionary.count;

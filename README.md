@@ -73,7 +73,10 @@ NSUInteger count = [dictionary objectsCountSynchronously];
 }];
 ```
 
-#### Versions
+#### History
+
+**Version 0.0.5**
+* Fixed Analyzer warning
 
 **Version 0.0.4**
 * Added method to get object for key synchronously

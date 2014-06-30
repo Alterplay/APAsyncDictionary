@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface APAsyncDictionary : NSObject
-{
-    dispatch_queue_t queue;
-}
 
 // set objects
 - (void)setObject:(id)object forKey:(id <NSCopying>)key;

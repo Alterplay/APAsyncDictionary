@@ -1,0 +1,13 @@
+PODS:
+  - Cedar (0.9.7)
+  - CedarAsync (0.0.1):
+    - Cedar
+
+DEPENDENCIES:
+  - CedarAsync
+
+SPEC CHECKSUMS:
+  Cedar: d704a464f628b39ce763d49f42b5510a9e0b03b9
+  CedarAsync: 65137f0cef5f3f38ceaff5fc2aaa45a8792f3a08
+
+COCOAPODS: 0.33.1

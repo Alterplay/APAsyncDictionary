@@ -75,6 +75,9 @@ NSUInteger count = [dictionary objectsCountSynchronously];
 
 #### History
 
+**Version 0.0.6**
+* Improved read access performance
+
 **Version 0.0.5**
 * Fixed Analyzer warning
 
